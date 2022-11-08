@@ -7,13 +7,13 @@ class ShoePage extends StatelessWidget {
     return Scaffold(
         body: Column(
       children: [
-        CustomAppBar(text: "For you"),
-        SizedBox(height: 20),
+        const CustomAppBar(text: "For you"),
+        const SizedBox(height: 20),
         Expanded(
             child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(children: [
-            ShoePreview(),
+          child: Column(children: const [
+            Hero(tag: 'shoePreview', child: ShoePreview()),
             ShoeDescription(
               title: 'Nike Air Max 720',
               description:
@@ -21,7 +21,7 @@ class ShoePage extends StatelessWidget {
             )
           ]),
         )),
-        AddtocartButton(amount: 180.0)
+        const AddtocartButton(amount: 180.0)
       ],
     ));
   }

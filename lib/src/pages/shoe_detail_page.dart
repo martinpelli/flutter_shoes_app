@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_widgets.dart';
@@ -11,11 +12,11 @@ class ShoeDetailPage extends StatelessWidget {
       body: Column(children: [
         Stack(
           children: [
-            const ShoePreview(fullscreen: true),
+            const Hero(tag: 'shoePreview', child: ShoePreview(fullscreen: true)),
             Positioned(
                 top: 80,
                 child: FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pop(context),
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   highlightElevation: 0,
@@ -50,12 +51,12 @@ class _BuyNow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      margin: EdgeInsets.only(top: 20.0),
+      margin: const EdgeInsets.only(top: 20.0),
       child: Row(
         children: [
-          Text('\$180.0', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-          Spacer(),
-          OrangeButton(width: 120, height: 40, text: 'Buy Now'),
+          const Text('\$180.0', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+          const Spacer(),
+          Bounce(from: 8, delay: const Duration(microseconds: 500), child: const OrangeButton(width: 120, height: 40, text: 'Buy Now')),
         ],
       ),
     );
@@ -74,10 +75,10 @@ class _Colors extends StatelessWidget {
           Expanded(
               child: Stack(
             children: const [
-              Positioned(left: 90, child: _ColorButton(Color(0xffC6d642))),
-              Positioned(left: 60, child: _ColorButton(Color(0xffFFaD29))),
-              Positioned(left: 30, child: _ColorButton(Color(0xff2099F1))),
-              _ColorButton(Color(0xff364D56)),
+              Positioned(left: 90, child: _ColorButton(Color(0xffC6d642), 4)),
+              Positioned(left: 60, child: _ColorButton(Color(0xffFFaD29), 3)),
+              Positioned(left: 30, child: _ColorButton(Color(0xff2099F1), 2)),
+              _ColorButton(Color(0xff364D56), 1),
             ],
           )),
           const OrangeButton(
@@ -94,18 +95,24 @@ class _Colors extends StatelessWidget {
 
 class _ColorButton extends StatelessWidget {
   final Color color;
+  final int index;
 
   const _ColorButton(
-    this.color, {
+    this.color,
+    this.index, {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 45,
-      height: 45,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+    return FadeInLeft(
+      delay: Duration(milliseconds: index * 100),
+      duration: const Duration(milliseconds: 300),
+      child: Container(
+        width: 45,
+        height: 45,
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      ),
     );
   }
 }
