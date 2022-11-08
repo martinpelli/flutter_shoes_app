@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 
 class ShoePreview extends StatelessWidget {
-  const ShoePreview({super.key});
+  final bool fullscreen;
+
+  const ShoePreview({super.key, this.fullscreen = false});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
-      width: double.infinity,
-      height: 430.0,
-      decoration: BoxDecoration(color: Color(0xffFFCF53), borderRadius: BorderRadius.circular(50)),
-      child: Column(
-        children: const [_ShoeShadow(), _ShoeSize()],
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: fullscreen ? 5 : 0, horizontal: fullscreen ? 5 : 30),
+      child: Container(
+        width: double.infinity,
+        height: fullscreen ? 410 : 430.0,
+        decoration: BoxDecoration(
+            color: const Color(0xffFFCF53),
+            borderRadius: fullscreen ? BorderRadius.vertical(bottom: Radius.circular(50), top: Radius.circular(40)) : BorderRadius.circular(50)),
+        child: Column(
+          children: [const _ShoeShadow(), if (!fullscreen) const _ShoeSize()],
+        ),
       ),
     );
   }
